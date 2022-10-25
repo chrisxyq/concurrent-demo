@@ -1,4 +1,4 @@
-package threadbasic;
+package basic.others;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;

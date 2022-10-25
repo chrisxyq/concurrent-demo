@@ -1,5 +1,8 @@
-package threadbasic;
+package basic;
 
+/**
+ * 编译优化带来的有序性问题
+ */
 public class Singleton {
     /**
      * new 操作指令重排：

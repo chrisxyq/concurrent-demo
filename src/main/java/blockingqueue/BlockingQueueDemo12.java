@@ -1,5 +1,9 @@
 package blockingqueue;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import utils.JsonUtils;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  *  2.1 阻塞      必须要阻塞/不得不阻塞
  * 3    how
  */
+@Slf4j
 public class BlockingQueueDemo12 {
     public static void main(String[] args) throws InterruptedException {
         BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(3);
@@ -59,5 +64,25 @@ public class BlockingQueueDemo12 {
         System.out.println(blockingQueue.offer("a"));
         System.out.println(blockingQueue.offer("a", 3L, TimeUnit.SECONDS));//等3秒
 
+    }
+    @Test
+    public void test() throws InterruptedException {
+        BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(5);
+        queue.put(0);
+        queue.put(1);
+        queue.put(2);
+        log.info("queue:{}", JsonUtils.toJson(queue));
+         Thread thread = new Thread(() -> {
+            try {
+                queue.take();
+                log.info("queue.take(),queue:{},queue.size():{}", JsonUtils.toJson(queue),queue.size());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+        queue.put(3);
+        thread.join();
+        log.info("queue:{}", JsonUtils.toJson(queue));
     }
 }

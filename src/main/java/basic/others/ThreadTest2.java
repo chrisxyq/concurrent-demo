@@ -1,4 +1,4 @@
-package threadbasic;
+package basic.others;
 
 /**
  * 创建多线程的方式二：实现Runnable接口

@@ -1,4 +1,4 @@
-package threadBasic;
+package basic.others;
 
 import org.junit.Test;
 
