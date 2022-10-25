@@ -14,6 +14,8 @@
 package threadPool.dto;
 
 
+import threadpool.dto.Command;
+
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -21,12 +23,12 @@ import java.util.concurrent.CompletableFuture;
  * Date: 2019/9/20
  */
 public class ResponseFuture {
-    private final int requestId;
+    private final int                        requestId;
     private final CompletableFuture<Command> future;
     /**
      * ResponseFuture创建时间
      */
-    private final long timestamp;
+    private final long                       timestamp;
 
     public ResponseFuture(int requestId, CompletableFuture<Command> future) {
         this.requestId = requestId;

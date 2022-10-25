@@ -1,7 +1,6 @@
 package threadpool;
 
 import org.junit.Test;
-import threadpool.dto.ResponseFuture;
 
 import java.io.Closeable;
 import java.util.Map;
@@ -17,12 +16,12 @@ public class InFlightRequests implements Closeable {
      * 直到有人归还了许可，才能继续发送请求。我们每结束一个在途请求，就归还一个许可，
      * 这样就可以保证在途请求的数量最多不超过 10 个请求，积压在服务端正在处理或者待处理的请求也不会超过 10 个。
      */
-    private final        Semaphore                    semaphore                = new Semaphore(10);
+    private final        Semaphore                                   semaphore                = new Semaphore(10);
     /**
      * 用于维护所有的在途请求，key为请求id，value为返回值
      */
-    private final        Map<Integer, ResponseFuture> futureMap                = new ConcurrentHashMap<>();
-    private final        ScheduledExecutorService     scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+    private final        Map<Integer, threadPool.dto.ResponseFuture> futureMap                = new ConcurrentHashMap<>();
+    private final        ScheduledExecutorService                    scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
     private final        ScheduledFuture              scheduledFuture;
 
     public InFlightRequests() {
@@ -32,7 +31,7 @@ public class InFlightRequests implements Closeable {
         scheduledFuture = scheduledExecutorService.scheduleAtFixedRate(this::removeTimeoutFutures, 0, 1, TimeUnit.SECONDS);
     }
 
-    public void put(ResponseFuture responseFuture) throws InterruptedException, TimeoutException {
+    public void put(threadPool.dto.ResponseFuture responseFuture) throws InterruptedException, TimeoutException {
         if (semaphore.tryAcquire(TIMEOUT_SEC, TimeUnit.SECONDS)) {
             futureMap.put(responseFuture.getRequestId(), responseFuture);
         } else {
@@ -58,8 +57,8 @@ public class InFlightRequests implements Closeable {
         });
     }
 
-    public ResponseFuture remove(int requestId) {
-        ResponseFuture future = futureMap.remove(requestId);
+    public threadPool.dto.ResponseFuture remove(int requestId) {
+        threadPool.dto.ResponseFuture future = futureMap.remove(requestId);
         if (null != future) {
             semaphore.release();
         }
@@ -77,7 +76,7 @@ public class InFlightRequests implements Closeable {
         InFlightRequests inFlightRequests = new InFlightRequests();
         for (int i = 0; i < 15; i++) {
             System.out.println(i);
-            inFlightRequests.put(new ResponseFuture(i, new CompletableFuture<>()));
+            inFlightRequests.put(new threadPool.dto.ResponseFuture(i, new CompletableFuture<>()));
         }
         inFlightRequests.close();
     }

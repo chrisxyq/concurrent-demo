@@ -12,7 +12,7 @@ package cases.incrAndDecr;
  */
 public class IncrAndDecrByLockTest {
     public static void main(String[] args) {
-        application.incrAndDecr.ShareByLock share = new application.incrAndDecr.ShareByLock();
+        ShareByLock share = new ShareByLock();
         new Thread(() -> {
             for (int i = 0; i < 10; i++) {
                 try {
