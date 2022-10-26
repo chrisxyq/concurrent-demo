@@ -1,4 +1,4 @@
-package basic.others;
+package basic;
 
 import org.junit.Test;
 
@@ -13,25 +13,30 @@ import org.junit.Test;
  * ctrl+shift+/：注释多行
  */
 public class DemonThreadTest {
-    @Test
-    public void test(){
-        Thread aa = new Thread(() -> {
-            System.out.println(Thread.currentThread().getName() + "::" + Thread.currentThread().isDaemon());
-            while (true) {
 
+    @Test
+    public void test() {
+        Thread aa = new Thread(() -> {
+            while (true) {
+                System.out.println(Thread.currentThread().getName()
+                        + "::" + Thread.currentThread().getState());
             }
-        }, "aa");
+        }, "demon");
         aa.start();
         System.out.println(Thread.currentThread().getName() + "结束");
     }
 
-    public static void main(String[] args) {
+    /**
+     * 设置为守护线程之后，主程序结束，守护线程也结束
+     */
+    @Test
+    public void test1() {
         Thread aa = new Thread(() -> {
-            System.out.println(Thread.currentThread().getName() + "::" + Thread.currentThread().isDaemon());
             while (true) {
-
+                System.out.println(Thread.currentThread().getName()
+                        + "::" + Thread.currentThread().getState());
             }
-        }, "aa");
+        }, "demon");
         //设置为守护线程之后，程序才会结束
         aa.setDaemon(true);
         aa.start();

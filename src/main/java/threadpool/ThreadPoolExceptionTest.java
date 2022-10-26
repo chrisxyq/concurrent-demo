@@ -1,4 +1,4 @@
-package threadPool;
+package threadpool;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.junit.Test;

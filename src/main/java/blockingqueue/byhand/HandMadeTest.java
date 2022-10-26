@@ -1,4 +1,4 @@
-package blockingqueue.handmade;
+package blockingqueue.byhand;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class HandMadeTest {
                 e.printStackTrace();
             }
         });
-        // 启动两个线程
+        // 从 NEW 状态转换到 RUNNABLE 状态
         th1.start();
         th2.start();
         // 等待两个线程执行结束

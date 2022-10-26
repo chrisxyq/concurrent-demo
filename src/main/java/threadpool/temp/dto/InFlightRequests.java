@@ -1,4 +1,4 @@
-package threadpool;
+package threadpool.temp.dto;
 
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class InFlightRequests implements Closeable {
     /**
      * 用于维护所有的在途请求，key为请求id，value为返回值
      */
-    private final        Map<Integer, threadPool.dto.ResponseFuture> futureMap                = new ConcurrentHashMap<>();
+    private final        Map<Integer, ResponseFuture> futureMap                = new ConcurrentHashMap<>();
     private final        ScheduledExecutorService                    scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
     private final        ScheduledFuture              scheduledFuture;
 
@@ -31,7 +31,7 @@ public class InFlightRequests implements Closeable {
         scheduledFuture = scheduledExecutorService.scheduleAtFixedRate(this::removeTimeoutFutures, 0, 1, TimeUnit.SECONDS);
     }
 
-    public void put(threadPool.dto.ResponseFuture responseFuture) throws InterruptedException, TimeoutException {
+    public void put(ResponseFuture responseFuture) throws InterruptedException, TimeoutException {
         if (semaphore.tryAcquire(TIMEOUT_SEC, TimeUnit.SECONDS)) {
             futureMap.put(responseFuture.getRequestId(), responseFuture);
         } else {
@@ -57,8 +57,8 @@ public class InFlightRequests implements Closeable {
         });
     }
 
-    public threadPool.dto.ResponseFuture remove(int requestId) {
-        threadPool.dto.ResponseFuture future = futureMap.remove(requestId);
+    public ResponseFuture remove(int requestId) {
+        ResponseFuture future = futureMap.remove(requestId);
         if (null != future) {
             semaphore.release();
         }
@@ -76,7 +76,7 @@ public class InFlightRequests implements Closeable {
         InFlightRequests inFlightRequests = new InFlightRequests();
         for (int i = 0; i < 15; i++) {
             System.out.println(i);
-            inFlightRequests.put(new threadPool.dto.ResponseFuture(i, new CompletableFuture<>()));
+            inFlightRequests.put(new ResponseFuture(i, new CompletableFuture<>()));
         }
         inFlightRequests.close();
     }

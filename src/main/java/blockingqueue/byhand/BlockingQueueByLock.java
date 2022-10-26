@@ -1,8 +1,7 @@
-package blockingqueue.handmade;
+package blockingqueue.byhand;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
 import utils.JsonUtils;
 
 import java.util.LinkedList;

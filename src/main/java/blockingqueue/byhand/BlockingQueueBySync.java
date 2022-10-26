@@ -1,4 +1,4 @@
-package blockingqueue.handmade;
+package blockingqueue.byhand;
 
 import lombok.extern.slf4j.Slf4j;
 import utils.JsonUtils;

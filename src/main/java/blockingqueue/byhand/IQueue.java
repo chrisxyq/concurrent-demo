@@ -1,4 +1,4 @@
-package blockingqueue.handmade;
+package blockingqueue.byhand;
 
 public interface IQueue<E> {
     /**

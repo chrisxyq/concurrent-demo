@@ -9,7 +9,9 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 class MyCache {
-    //volatile:，保证可见性，不保证原子性，一个线程修改后，通知更新
+    /**
+     * volatile:保证可见性，不保证原子性，一个线程修改后，通知更新
+     */
     private volatile Map<String, Object> map = new HashMap<>();
     private ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
