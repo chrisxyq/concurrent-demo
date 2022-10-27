@@ -12,6 +12,13 @@ public class Singleton {
      * 最后在内存 M 上初始化 Singleton 对象。
      */
     static volatile Singleton instance;
+
+    /**
+     * 在双重检查方案中，一旦 Singleton 对象被成功创建之后，
+     * 就不会执行 synchronized(Singleton.class){}相关的代码，
+     * 也就是说，此时 getInstance() 方法的执行路径是无锁的，从而解决了性能问题。
+     * @return
+     */
     static Singleton getInstance(){
         if (instance == null) {
             synchronized(Singleton.class) {

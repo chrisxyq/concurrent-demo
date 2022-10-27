@@ -1,4 +1,4 @@
-package locks;
+package locks.deadlock;
 
 /**
  * 死锁：多个线程互相抱着对方需要的资源，然后形成僵持

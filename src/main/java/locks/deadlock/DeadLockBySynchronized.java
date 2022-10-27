@@ -1,4 +1,4 @@
-package locks;
+package locks.deadlock;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,4 +1,4 @@
-package completablefuture.transefer;
+package future.completablefuture.transefer;
 
 import org.junit.Test;
 

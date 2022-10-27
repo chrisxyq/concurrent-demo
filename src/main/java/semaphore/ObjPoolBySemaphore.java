@@ -37,7 +37,18 @@ class ObjPool<T, R> {
     // 用信号量实现限流器
     final Semaphore sem;
 
-    // 构造函数
+    /**
+     * 构造函数
+     * Semaphore 可以允许多个线程访问一个临界区，
+     * 那就意味着可能存在多个线程同时访问 ArrayList，
+     * 而 ArrayList 不是线程安全的，
+     * 所以对象池的例子中是不能够将 Vector 换成 ArrayList 的。
+     * Semaphore 允许多个线程访问一个临界区，这也是一把双刃剑，
+     * 当多个线程进入临界区时，如果需要访问共享变量就会存在并发问题，
+     * 所以必须加锁，也就是说 Semaphore 需要锁中锁。
+     * @param size
+     * @param t
+     */
     ObjPool(int size, T t) {
         pool = new Vector<T>() {
         };

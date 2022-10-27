@@ -87,7 +87,7 @@ class Account {
      * @throws InterruptedException
      */
     void transfer(Account tar, int amt) throws InterruptedException {
-        boolean successFlag = false;
+        //boolean successFlag = false;
         while (true) {
             if (this.lock.tryLock(new Random(1000).nextInt(), TimeUnit.SECONDS)) {
                 log.info("get lock:{},current thread:{}",
@@ -99,12 +99,13 @@ class Account {
                         try {
                             this.balance -= amt;
                             tar.balance += amt;
+                            break;
                         } finally {
                             log.info("unlock lock:{},current thread:{}",
                                     tar.lock, Thread.currentThread().getName());
                             log.info("transfer success! this.Balance:{},tar.Balance:{}",
                                     this.getBalance(), tar.getBalance());
-                            successFlag = true;
+                            //successFlag = true;
                             tar.lock.unlock();
                         }
                     }//if
@@ -112,9 +113,9 @@ class Account {
                     log.info("unlock lock:{},current thread:{}",
                             this.lock, Thread.currentThread().getName());
                     this.lock.unlock();
-                    if (successFlag) {
-                        break;
-                    }
+                    //if (successFlag) {
+                    //    break;
+                    //}
                 }
             }//if
         }//while

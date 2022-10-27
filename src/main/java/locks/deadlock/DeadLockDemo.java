@@ -1,4 +1,4 @@
-package locks;
+package locks.deadlock;
 
 /**
  *演示线程的死锁问题
