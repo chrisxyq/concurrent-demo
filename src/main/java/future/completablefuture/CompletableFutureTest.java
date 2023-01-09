@@ -118,6 +118,32 @@ public class CompletableFutureTest {
         log.info("current thread:{},res:{}", Thread.currentThread().getName(), f0.join());
     }
 
+    /**
+     * CompletableFuture.supplyAsync(
+     * 默认使用ForkJoinPool.commonPool线程池
+     * 异步调用
+     *
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    @Test
+    public void test11() throws ExecutionException, InterruptedException {
+         Object o = new Object();
+        //默认使用ForkJoinPool.commonPool线程池
+        CompletableFuture<String> f0 =
+                CompletableFuture.supplyAsync(
+                        () -> {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            log.info("current thread:{},o:{}", Thread.currentThread().getName(),o);
+                            return "Hello World";
+                        });
+        log.info("current thread:{},res:{}", Thread.currentThread().getName(), f0.join());
+    }
+
     @Test
     public void test3() throws ExecutionException, InterruptedException {
         System.out.println(Runtime.getRuntime().availableProcessors());
