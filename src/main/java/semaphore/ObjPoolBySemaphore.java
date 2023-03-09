@@ -46,6 +46,9 @@ class ObjPool<T, R> {
      * Semaphore 允许多个线程访问一个临界区，这也是一把双刃剑，
      * 当多个线程进入临界区时，如果需要访问共享变量就会存在并发问题，
      * 所以必须加锁，也就是说 Semaphore 需要锁中锁。
+     *
+     * 對象池裡面有size個對象
+     * Semaphore允許size個線程同時進入臨界區
      * @param size
      * @param t
      */
@@ -97,8 +100,9 @@ public class ObjPoolBySemaphore {
             new Thread(() -> {
                 try {
                     pool.exec(t -> {
-                        System.out.println(t);
-                        return t.toString();
+                        return null;
+                        //System.out.println(t);
+                        //return t.toString();
                     });
                 } catch (InterruptedException e) {
                     e.printStackTrace();
